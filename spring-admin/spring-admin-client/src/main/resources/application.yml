@@ -1,0 +1,44 @@
+
+spring.application.name: spring-admin-client
+spring.profiles.active: local
+
+server.port: 8080
+
+#basic auth creddentials
+spring.security:
+  user:
+    name: client
+    password: client
+
+#configs to connect to a secured server
+spring.boot.admin:
+  client:
+    url: http://localhost:9090
+    instance.service-base-url: http://localhost:${server.port}
+    username: admin
+    password: admin
+    #configs to give secured server info
+    instance.metadata.user.name: ${spring.security.user.name}
+    instance.metadata.user.password: ${spring.security.user.password}
+
+  # -- actuator global configuration -- #
+management: 
+  endpoints: 
+    web.exposure: 
+      include: "*" 
+  endpoint.health.show-details: always
+        
+  info:
+    build.enabled: true
+    env.enabled: true
+  
+# This info details we would like to expose
+info:
+  application:
+    name: ${spring.application.name}
+    description: spring actuator application
+    version: '@project.version@'
+  env:
+    profile: ${spring.profiles.active}
+    java-version: ${java.vm.specification.version}
+    spring-boot-version: '@project.parent.version@'

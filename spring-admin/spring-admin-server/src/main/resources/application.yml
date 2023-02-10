@@ -1,0 +1,48 @@
+
+spring.application.name: spring-admin-server
+spring.profiles.active: local
+server.port: 9090
+
+spring.security:
+  user.name: admin
+  user.password: admin
+
+#configs to connect to self register the admin server as a client
+spring.boot.admin:
+  client:
+    url: http://localhost:${server.port}
+    instance.service-base-url: http://localhost:${server.port}
+    username: ${spring.security.user.name}
+    password: ${spring.security.user.password}
+    #configs to give secured server info
+    instance.metadata.user.name: ${spring.security.user.name}
+    instance.metadata.user.password: ${spring.security.user.password}
+
+  notify:
+    mail.enabled: true
+    mail.template: classpath:status-changed.html
+    mail.from: service-noreply@be-ys.com
+    mail.to: jihed.kaouech-ext@almerys.com
+    mail.cc:
+    additional-properties.environment: ${spring.profiles.active}
+
+
+# -- actuator global configuration -- #
+management: 
+  endpoints: 
+    web.exposure: 
+      include: "*" 
+  endpoint.health.show-details: always
+        
+#mail notifications
+#spring.mail.test-connection: true 
+spring.mail:
+  host: smtp.test.com
+  default-encoding: UTF-8
+  protocol: smtp
+  port: 25
+#spring.mail.username:
+#spring.mail.password:
+  properties:
+    mail.smtp.auth: false
+    mail.smtp.starttls.enable: false
