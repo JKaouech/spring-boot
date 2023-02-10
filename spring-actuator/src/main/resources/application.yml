@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  
+spring:
+  profiles.active: local
+  application.name: spring-actuator
+  
+# -- actuator global configuration -- #
+management: 
+  endpoints: 
+    web: 
+      exposure: 
+        include: "*" 
+        
+management.info:
+  # In older version of Spring Boot the environment contributor was enabled by default!
+  # Since Spring Boot 2.6 the info env contributor is disabled by default.
+  # We have to explicitly enable it so see the details!
+  env.enabled: true
+  # Was already disabled by default no changes in Spring Boot 2.6
+  java.enabled: false
+  # Enabled by default
+  # Requires you to have: Generate Build Information
+  # See: https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.build.generate-info
+  build.enabled: true
+  # Enabled by default
+  # Requires you to have the: pl.project13.maven:git-commit-id-plugin in your project
+  # See: https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto.build.generate-git-info
+  git.enabled: true
+      
+## Configuring info endpoint
+
+# This info details we would like to expose
+info:
+  application:
+    name: ${spring.application.name}
+    description: spring actuator application
+    version: '@project.version@'
+    
+  env:
+    profile: ${spring.profiles.active}
+    java-version: ${java.vm.specification.version}
+    spring-cloud-version: '@spring-cloud.version@'
+    spring-boot-version: '@project.parent.version@'
+# -- end actuator configuration -- #
