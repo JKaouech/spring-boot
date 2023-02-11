@@ -1,0 +1,50 @@
+server:
+  port: 8080
+  
+spring:
+  profiles.active: local
+  application.name: spring-prometheus-client
+  
+# -- actuator global configuration -- #
+management: 
+  endpoints: 
+    web: 
+      exposure: 
+        include: "health,info,prometheus"
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true 
+        
+management.metrics:
+  tags:
+    application: ${spring.application.name}
+    env: ${spring.profiles.active}
+  distribution:
+    percentiles-histogram:
+      http:
+        server:
+          requests: 'true'
+        
+management.info:
+  env.enabled: true
+  build.enabled: true
+      
+## Configuring info endpoint
+
+# This info details we would like to expose
+info:
+  application:
+    name: ${spring.application.name}
+    description: spring actuator application
+    version: '@project.version@'
+    
+  env:
+    profile: ${spring.profiles.active}
+    java-version: ${java.vm.specification.version}
+    spring-cloud-version: '@spring-cloud.version@'
+    spring-boot-version: '@project.parent.version@'
+# -- end actuator configuration -- #
