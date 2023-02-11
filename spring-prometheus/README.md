@@ -14,21 +14,21 @@ Read this article for more details : [spring-actuator](https://github.com/JKaoue
 #### Prometheus dependency
 To expose prometeus enndpoint we nedd to add this dependency
 ```xml
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+</dependency>
 
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-actuator</artifactId>
-	</dependency>
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
 
-	<dependency>
-		<groupId>io.micrometer</groupId>
-		<artifactId>micrometer-registry-prometheus</artifactId>
-		<scope>runtime</scope>
-	</dependency>
+<dependency>
+	<groupId>io.micrometer</groupId>
+	<artifactId>micrometer-registry-prometheus</artifactId>
+	<scope>runtime</scope>
+</dependency>
 ```
 #### Spring Boot properties
 Next, we need to expose an actuator endpoint through which Prometheus will collect metrics data in the format that Prometheus understands. For this, we need to add the following properties.
@@ -126,11 +126,12 @@ the config file is mounted at the location `/etc/prometheus` and we use the loca
 3- Open the URL http://localhost:9090 on browser.
 4- Search for the label  `http_server_requests_seconds_count`
 
-image::doc\images\prometheus-01.PNG[]
+![](https://raw.githubusercontent.com/JKaouech/spring-boot/master/spring-prometheus/doc/images/prometheus-01.PNG)
+
 
 In case you don't find the label, You can check if the job is running by navigating to **"Status > Targets"**. You should see the state as “UP".
 
-image::doc\images\prometheus-02.PNG[]
+![](https://raw.githubusercontent.com/JKaouech/spring-boot/master/spring-prometheus/doc/images/prometheus-02.PNG)
 
 Now, the data is getting ingested into Prometheus every 2 seconds.
 Although Prometheus has a decent UI, Grafana's Dashboard is more powerful.
