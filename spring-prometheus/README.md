@@ -2,7 +2,23 @@
 
 In this article, we will be looking into how we can monitor our Spring Boot application using Grafana. We would be looking into the whole setup and create a simple dashboard to view some metrics.
 
-# 1. Application
+
+## Table of contents
+- [Application](#1-application)
+  - [Actuator](#11--actuator)
+  - [Setup](#12--setup)
+- [Prometheus](#2--prometheus)
+  - [Configuration file](#21-configuration-file)
+  - [Start service](#22-start-service)
+  - [Test](#23-test)
+- [Grafana](#3--grafana)
+  - [Datasource](#31-datasource)
+  - [Dashboard](#32-dashboard)
+  - [Start service](#33-start-service)
+  - [Test](#34-test)
+- [REF](#ref)
+
+## 1. Application
 Spring Boot is a very popular microservice framework that significantly simplifies web application development by providing Java developers with a platform to get started with an auto-configurable, production-grade Spring application.
 
 ### 1.1- Actuator
@@ -76,7 +92,7 @@ jvm_memory_used_bytes{application="spring-prometheus-client",area="heap",env="lo
 ```
 The first part  (`jvm_memory_used_bytes`) is called the label, while the fields inside the curly braces are called attributes. Each of these labels represents a particular metric and the attribute provides you with a way to query so that you can get the values.
 
-# 2- Prometheus
+## 2- Prometheus
 Prometheus gathers metrics at intervals and needs to know how often to scrape them. 
 We will be using a Prometheus docker image and provide it with some configuration
 
@@ -136,7 +152,7 @@ In case you don't find the label, You can check if the job is running by navigat
 Now, the data is getting ingested into Prometheus every 2 seconds.
 Although Prometheus has a decent UI, Grafana's Dashboard is more powerful.
 
-# 3- Grafana
+## 3- Grafana
 Before starting Grafana we need to do some configuration to prepare the data source and dashboard. with that, we no longer need to create them manually.
 
 
@@ -187,8 +203,7 @@ Create a docker-compose file that will bring the Grafana docker image up and run
       - ./grafana/dashboards:/etc/grafana/dashboards # dashboard json files directory
 ```
 
-
-### 2.3 Test
+### 3.4 Test
 2- Start the docker image with `docker compose up -d`
 3- Open the URL http://localhost:3000 on browser.
 
@@ -201,12 +216,11 @@ We can see our Dashboard that we have already configured
 # REF
 
 https://refactorfirst.com/spring-boot-prometheus-grafana
+
 https://grafana.com/blog/2022/04/26/set-up-and-observe-a-spring-boot-application-with-grafana-cloud-prometheus-and-opentelemetry/
+
 https://betterprogramming.pub/how-to-monitor-a-spring-boot-app-with-prometheus-and-grafana-22e2338f97fc
 
-
 https://github.com/blueswen/spring-boot-observability
-
-
 
 https://dev.to/luafanti/spring-boot-logging-with-loki-promtail-and-grafana-loki-stack-aep
