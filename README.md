@@ -1,3 +1,3 @@
-spring-boot
+# Spring Boot example and tutorial
 
-for more detail go to [weki] (https://github.com/JKaouech/spring-boot/wiki)
+For more detail go to [wiki](https://github.com/JKaouech/spring-boot/wiki)
