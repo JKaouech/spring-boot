@@ -14,21 +14,21 @@ Read this article for more details : [spring-actuator](https://github.com/JKaoue
 #### Prometheus dependency
 To expose prometeus enndpoint we nedd to add this dependency
 ```xml
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-web</artifactId>
-</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-actuator</artifactId>
-</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
-<dependency>
-	<groupId>io.micrometer</groupId>
-	<artifactId>micrometer-registry-prometheus</artifactId>
-	<scope>runtime</scope>
-</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 ```
 #### Spring Boot properties
 Next, we need to expose an actuator endpoint through which Prometheus will collect metrics data in the format that Prometheus understands. For this, we need to add the following properties.
@@ -137,8 +137,66 @@ Now, the data is getting ingested into Prometheus every 2 seconds.
 Although Prometheus has a decent UI, Grafana's Dashboard is more powerful.
 
 # 3- Grafana
+Before starting Grafana we need to do some configuration to prepare the data source and dashboard. with that, we no longer need to create them manually.
 
 
+### 3.1 Datasource
+First we need to add and configure the Prometheus data source.
+```yaml
+apiVersion: 1
+
+# list of datasources that should be deleted from the database
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+
+datasources:
+- uid: prometheus
+  orgId: 1
+  name: Prometheus
+  type: prometheus
+  url: http://prometheus:9090 
+  isDefault: true
+  access: proxy
+  readOnly: false
+  editable: true
+```
+### 3.2 dashboard
+To prepare the Dashboard we need two things :
+- Dashboard config file : dashboards.yaml
+- Dashboard source file : data-observability.json
+
+
+### 3.3 Start service
+Create a docker-compose file that will bring the Grafana docker image up and running.
+```yaml
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    user: root
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources # data sources
+      - ./grafana/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml # dashboard setting
+      - ./grafana/dashboards:/etc/grafana/dashboards # dashboard json files directory
+```
+
+
+### 2.3 Test
+2- Start the docker image with `docker compose up -d`
+3- Open the URL http://localhost:3000 on browser.
+
+![](https://raw.githubusercontent.com/JKaouech/spring-boot/master/spring-prometheus/doc/images/grafana-01.PNG)
+
+We can see our Dashboard that we have already configured
+
+![](https://raw.githubusercontent.com/JKaouech/spring-boot/master/spring-prometheus/doc/images/grafana-02.PNG)
 
 # REF
 
