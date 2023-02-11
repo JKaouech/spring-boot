@@ -1,6 +1,6 @@
 # Spring boot admin
 
-## Articles
+## Article
 [Spring Boot admin](https://github.com/JKaouech/spring-boot/wiki/Spring-boot-admin)
 
 

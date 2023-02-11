@@ -1,6 +1,6 @@
 # Spring boot actuator
 
-## Articles
+## Article
 [Spring boot actuator](https://github.com/JKaouech/spring-boot/wiki/Spring-boot-actuator)
 
 
