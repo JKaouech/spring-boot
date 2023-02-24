@@ -23,6 +23,7 @@ management.metrics:
   tags:
     application: ${spring.application.name}
     env: ${spring.profiles.active}
+    version: '@project.version@'
   distribution:
     percentiles-histogram:
       http:

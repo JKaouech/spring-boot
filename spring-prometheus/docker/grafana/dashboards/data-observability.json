@@ -56,12 +56,93 @@
           "color": {
             "mode": "thresholds"
           },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "yellow",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 0,
+        "y": 1
+      },
+      "id": 98,
+      "interval": "1s",
+      "maxDataPoints": 9999,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "up{instance=\"$instance\"}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "decimals": 1,
           "mappings": [
             {
               "options": {
                 "match": "null",
                 "result": {
+                  "color": "red",
+                  "index": 0,
                   "text": "N/A"
                 }
               },
@@ -83,13 +164,14 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 6,
-        "x": 0,
+        "w": 3,
+        "x": 3,
         "y": 1
       },
       "id": 52,
+      "interval": "1s",
+      "maxDataPoints": 9999,
       "links": [],
-      "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -414,6 +496,8 @@
               "options": {
                 "match": "null",
                 "result": {
+                  "color": "red",
+                  "index": 0,
                   "text": "N/A"
                 }
               },
@@ -441,7 +525,6 @@
       },
       "id": 56,
       "links": [],
-      "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -475,7 +558,7 @@
           "step": 14400
         }
       ],
-      "title": "Start time",
+      "title": "Last start time",
       "type": "stat"
     },
     {
