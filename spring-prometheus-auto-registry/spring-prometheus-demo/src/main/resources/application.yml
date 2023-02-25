@@ -1,0 +1,73 @@
+server:
+  port: 8080
+  
+spring:
+  profiles.active: local
+  application.name: spring-prometheus-demo
+
+
+# -- database global configuration -- #
+spring.jpa:
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc.time_zone: UTC
+      format_sql: true
+  # Hibernate ddl auto (create, create-drop, validate, update)
+  hibernate:
+    ddl-auto: update
+  show-sql: false
+# -- end database configuration -- #
+
+# -- database configuration -- #
+spring.datasource:
+    url: jdbc:postgresql://localhost:5432/spring-prometheus-demo
+    username: postgres
+    password: postgres
+# -- end database configuration -- #
+
+eureka:
+  instance:
+    metadata-map:
+      application: ${spring.application.name}
+      env: ${spring.profiles.active}
+      version: '@project.version@'
+      metrics.path: /actuator/prometheus
+      health.path: /actuator/health
+      management.context-path: /actuator
+    preferIpAddress: true
+  client:
+    eureka-connection-idle-timeout-seconds: 10
+    eureka-server-connect-timeout-seconds: 10
+    registry-fetch-interval-seconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    
+# -- actuator global configuration -- #
+management: 
+  endpoints: 
+    web: 
+      exposure: 
+        include: "health,info,prometheus"
+  endpoint:
+    health:
+      show-details: always
+        
+management.info:
+  env.enabled: true
+      
+## Configuring info endpoint
+
+# This info details we would like to expose
+info:
+  application:
+    name: ${spring.application.name}
+    description: spring actuator application
+    version: '@project.version@'
+    
+  env:
+    profile: ${spring.profiles.active}
+    java-version: ${java.vm.specification.version}
+    spring-cloud-version: '@spring-cloud.version@'
+    spring-boot-version: '@spring-boot.version@'
+# -- end actuator configuration -- #

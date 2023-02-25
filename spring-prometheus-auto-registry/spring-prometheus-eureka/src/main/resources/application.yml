@@ -1,0 +1,12 @@
+server:
+  port: 8761
+  
+spring:
+  profiles.active: local
+  application.name: spring-prometheus-eureka
+  
+  
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
