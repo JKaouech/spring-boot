@@ -66,7 +66,7 @@
             }
           ],
           "mappings": [],
-          "noValue": "-1",
+          "noValue": "No data",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -122,6 +122,34 @@
                     "type": "special"
                   }
                 ]
+              },
+              {
+                "id": "noValue",
+                "value": "0"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Application"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Environnement"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
               }
             ]
           }
@@ -162,6 +190,7 @@
           "refId": "A"
         }
       ],
+      "title": "Status",
       "transformations": [
         {
           "id": "groupBy",
@@ -215,6 +244,18 @@
               "version (lastNotNull)": "Version"
             }
           }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": false,
+                "field": "Environnement"
+              }
+            ]
+          }
         }
       ],
       "type": "table"
@@ -243,16 +284,10 @@
             "mode": "thresholds"
           },
           "custom": {
-            "fillOpacity": 81,
+            "fillOpacity": 80,
             "lineWidth": 0
           },
-          "links": [
-            {
-              "targetBlank": true,
-              "title": "to dashboad",
-              "url": "/d/spring-boot/spring-boot-monitoring?var-env=${__field.labels.env}&var-application=${__field.labels.application}&var-instance=${__field.labels.instance}"
-            }
-          ],
+          "links": [],
           "mappings": [
             {
               "options": {
@@ -265,47 +300,23 @@
                   "color": "green",
                   "index": 0,
                   "text": "UP"
-                }
-              },
-              "type": "value"
-            },
-            {
-              "options": {
-                "match": "null+nan",
-                "result": {
-                  "color": "yellow",
+                },
+                "-1": {
+                  "color": "orange",
                   "index": 2,
                   "text": "UNKNOWN"
                 }
               },
-              "type": "special"
-            },
-            {
-              "options": {
-                "match": "empty",
-                "result": {
-                  "color": "yellow",
-                  "index": 3,
-                  "text": "UNKNOWN"
-                }
-              },
-              "type": "special"
+              "type": "value"
             }
           ],
+          "noValue": "-1",
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "yellow",
-                "value": null
-              },
-              {
                 "color": "red",
-                "value": 0
-              },
-              {
-                "color": "green",
-                "value": 1
+                "value": null
               }
             ]
           }
@@ -313,20 +324,21 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 15,
+        "h": 11,
         "w": 24,
         "x": 0,
         "y": 13
       },
       "id": 100,
+      "interval": "30s",
       "options": {
         "colWidth": 1,
         "legend": {
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
-        "rowHeight": 0.75,
+        "rowHeight": 0.97,
         "showValue": "never",
         "tooltip": {
           "mode": "single",
@@ -340,7 +352,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "editorMode": "builder",
+          "editorMode": "code",
           "exemplar": false,
           "expr": "up",
           "format": "time_series",
@@ -350,7 +362,18 @@
           "refId": "A"
         }
       ],
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "instance"
+            ],
+            "mode": "columns",
+            "valueLabel": "instance"
+          }
+        }
+      ],
       "type": "status-history"
     }
   ],
@@ -359,13 +382,36 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "filters": [],
+        "hide": 0,
+        "name": "Filters",
+        "skipUrlSync": false,
+        "type": "adhoc"
+      }
+    ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-15m",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h"
+    ]
+  },
   "timezone": "",
   "title": "Status Dashboard",
   "uid": "status",
