@@ -1,0 +1,13 @@
+
+spring:
+  application.name: spring-openai
+
+server.port: 8080
+
+
+application:
+  openai:
+    model: gpt-3.5-turbo
+    url: https://api.openai.com/v1/chat/completions
+    key: ${your_api_key}
+
