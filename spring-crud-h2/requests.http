@@ -1,0 +1,38 @@
+### Create "Jihed" 
+
+POST localhost:8080/api/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "jihed",
+  "email": "jihed.kaouech@gmail.com"
+}
+
+### create "JIKA" 
+
+POST localhost:8080/api/users
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "JIKA",
+  "email": "jihed.kaouech@ji-ka.tn"
+}
+
+### Get All user
+
+GET http://localhost:8080/api/users
+Accept: application/json
+
+### Delete "JIKA"
+
+DELETE http://localhost:8080/api/users/{{id}}
+
+
+### Get All user
+
+GET http://localhost:8080/api/users
+Accept: application/json
+
+###
