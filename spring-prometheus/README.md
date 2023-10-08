@@ -1,7 +1,7 @@
 # Monitoring Spring Boot Application with Prometheus and Grafana
 
 ## Article
-[Spring Boot Prometheus](https://github.com/JKaouech/spring-boot/wiki/Monitoring--with-Prometheus-and-Grafana)
+[Spring Boot Prometheus](https://www.ji-ka.tn/monitoring-with-prometheus-and-grafana/)
 
 
 ## How it works
