@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.jika.crud.sql.model.Role;
+import tn.jika.crud.sql.model.Car;
 import tn.jika.crud.sql.model.User;
 import tn.jika.crud.sql.repository.UserRepository;
 
@@ -33,10 +33,18 @@ public class UserMockController {
 					.name("Name-"+i)
 					.email(id+"@test.com")
 					.build();
-			Role role1 = Role.builder().id(id+"-A").name("Role- "+i+"-A").build();
-			user.addRole(role1);
-			Role role2 = Role.builder().id(id+"-B").name("Role- "+i+"-B").build();
-			user.addRole(role2);
+			
+			Car car1 = Car.builder().id(id+"-A")
+					.model("model- "+i+"-A")
+					.registration(id+"A")
+					.build();
+			user.addCar(car1);
+			
+			Car car2 = Car.builder().id(id+"-B")
+					.model("model- "+i+"-B")
+					.registration(id+"B")
+					.build();
+			user.addCar(car2);
 			log.info("Save user [{}]", i);
 			userRepository.save(user);
 		}

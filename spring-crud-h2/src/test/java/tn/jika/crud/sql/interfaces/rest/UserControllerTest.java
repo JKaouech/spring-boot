@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import tn.jika.crud.sql.JsonUtil;
 import tn.jika.crud.sql.model.User;
 import tn.jika.crud.sql.service.UserService;
-import tn.jika.crud.sql.web.mapper.RoleMapper;
+import tn.jika.crud.sql.web.mapper.CarMapper;
 import tn.jika.crud.sql.web.mapper.UserMapper;
 import tn.jika.crud.sql.web.rest.UserController;
 
@@ -36,7 +36,7 @@ public class UserControllerTest {
     private UserMapper userMapper;
     
     @MockBean
-    private RoleMapper roleMapper;
+    private CarMapper carMapper;
 
     @MockBean
     private UserService userService;

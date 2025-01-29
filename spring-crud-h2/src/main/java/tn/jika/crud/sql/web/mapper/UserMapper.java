@@ -8,7 +8,7 @@ import tn.jika.crud.sql.model.User;
 import tn.jika.crud.sql.web.model.SimpleUserDto;
 import tn.jika.crud.sql.web.model.UserDto;
 
-@Mapper(componentModel = "spring", uses = {RoleMapper.class})
+@Mapper(componentModel = "spring", uses = {CarMapper.class})
 public interface UserMapper {
 
 	UserDto userToDto (User user);

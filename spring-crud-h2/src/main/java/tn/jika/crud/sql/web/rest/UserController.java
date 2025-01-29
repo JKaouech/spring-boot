@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import tn.jika.crud.sql.exception.ResourceNotFoundException;
-import tn.jika.crud.sql.model.Role;
+import tn.jika.crud.sql.model.Car;
 import tn.jika.crud.sql.model.User;
 import tn.jika.crud.sql.service.UserService;
-import tn.jika.crud.sql.web.mapper.RoleMapper;
+import tn.jika.crud.sql.web.mapper.CarMapper;
 import tn.jika.crud.sql.web.mapper.UserMapper;
-import tn.jika.crud.sql.web.model.RoleDto;
+import tn.jika.crud.sql.web.model.CarDto;
 import tn.jika.crud.sql.web.model.SimpleUserDto;
 
 @RequiredArgsConstructor
@@ -28,10 +28,10 @@ import tn.jika.crud.sql.web.model.SimpleUserDto;
 public class UserController {
 
 	private final UserService userService;
-	
+
 	private final UserMapper userMapper;
-	
-	private final RoleMapper roleMapper;
+
+	private final CarMapper carMapper;
 
 	@GetMapping
 	public ResponseEntity<List<SimpleUserDto>> getAllUser() {
@@ -58,14 +58,23 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	@GetMapping("/role/{role}")
-	public ResponseEntity<List<SimpleUserDto>> getUserByRole(@PathVariable String role) {
-		List<User> users = userService.getUserByRole(role);
-			return new ResponseEntity<>(userMapper.userToSimpleDto(users), HttpStatus.OK);
+
+	@GetMapping("/car/registration/{registration}")
+	public ResponseEntity<SimpleUserDto> getUserByCarRegistration(@PathVariable String registration) {
+		User user = userService.getUserByCarRegistration(registration);
+		if (user != null) {
+			return new ResponseEntity<>(userMapper.userToSimpleDto(user), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
-	
-	
+
+	@GetMapping("/car/model/{model}")
+	public ResponseEntity<List<SimpleUserDto>> getUserByCar(@PathVariable String model) {
+		List<User> users = userService.getUserByCarModel(model);
+		return new ResponseEntity<>(userMapper.userToSimpleDto(users), HttpStatus.OK);
+	}
+
 	@PostMapping
 	public ResponseEntity<SimpleUserDto> addUser(@RequestBody SimpleUserDto userDto) {
 		User user = userService.addUser(userMapper.dtoToUser(userDto));
@@ -82,17 +91,14 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	
-	@PostMapping("/{id}/role")
-	public ResponseEntity<RoleDto> addRole(@PathVariable String id, @RequestBody RoleDto roleDto) {
-		Role role = roleMapper.dtoToRole(roleDto);
-		role.setUser(User.builder().id(id).build());
-		role = userService.addRole(id, roleMapper.dtoToRole(roleDto));
-		roleDto.setId(role.getId());
-		return new ResponseEntity<>(roleDto, HttpStatus.CREATED);
-	}
-	
-	
 
+	@PostMapping("/{id}/car")
+	public ResponseEntity<CarDto> addCar(@PathVariable String id, @RequestBody CarDto carDto) {
+		Car car = carMapper.dtoToCar(carDto);
+		car.setOwner(User.builder().id(id).build());
+		car = userService.addCar(id, carMapper.dtoToCar(carDto));
+		carDto.setId(car.getId());
+		return new ResponseEntity<>(carDto, HttpStatus.CREATED);
+	}
 
 }

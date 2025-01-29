@@ -12,12 +12,17 @@ import tn.jika.crud.sql.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-	
-    @Query("SELECT u FROM User u JOIN FETCH u.roles")
 	List<User> findAll();
+
+    @Query("SELECT u FROM User u JOIN FETCH u.cars")
+	List<User> findAllWithCars();
 	
 	Optional<User> findByEmail(String mail);
 
-    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = :role")
-	List<User> findUsersByRoleName(String role);
+    @Query("SELECT u FROM User u JOIN u.cars c WHERE c.registration = :registration")
+    Optional<User> findUsersByCarRegistration(String registration);
+    
+
+    @Query("SELECT u FROM User u JOIN u.cars c WHERE c.model = :model")
+	List<User> findUsersByCarModel(String model);
 }

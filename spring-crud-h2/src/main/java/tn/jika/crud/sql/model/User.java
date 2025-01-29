@@ -6,6 +6,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -28,18 +30,27 @@ public class User {
 
 	private String name;
 
+	private String firstName;
+
+	private String lastName;
+
+	private String adress;
+
+    @Enumerated(EnumType.STRING)
+	private Sex sex;
+
 	@Column(name = "mail")
 	private String email;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
-	private List<Role> roles;
+	@OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	private List<Car> cars;
 
-	public void addRole(Role role) {
-		if (roles == null) {
-			roles = new ArrayList<>();
+	public void addCar(Car car) {
+		if (cars == null) {
+			cars = new ArrayList<>();
 		}
-		role.setUser(this);
-		roles.add(role);
+		car.setOwner(this);
+		cars.add(car);
 	}
 
 }

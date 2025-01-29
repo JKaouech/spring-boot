@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import tn.jika.crud.sql.exception.ResourceNotFoundException;
-import tn.jika.crud.sql.model.Role;
+import tn.jika.crud.sql.model.Car;
 import tn.jika.crud.sql.model.User;
-import tn.jika.crud.sql.repository.RoleRepository;
+import tn.jika.crud.sql.repository.CarRepository;
 import tn.jika.crud.sql.repository.UserRepository;
 
 @Service
@@ -18,10 +18,10 @@ public class UserService {
 
 	private final UserRepository userRepository;
 	
-	private final RoleRepository roleRepository;
+	private final CarRepository carRepository;
 
 	public List<User> getAllUser() {
-		return userRepository.findAll();
+		return userRepository.findAllWithCars();
 	}
 
 	public User getUser(String id) {
@@ -41,26 +41,30 @@ public class UserService {
 		userRepository.delete(user);
 	}
 
-	public Role addRole(Role role) {
-		role.setId(UUID.randomUUID().toString());
-		return roleRepository.save(role);
+	public Car addCar(Car car) {
+		car.setId(UUID.randomUUID().toString());
+		return carRepository.save(car);
 	}
 
-	public Role addRole(String userId, Role role) {
+	public Car addCar(String userId, Car car) {
 		User user = getUser(userId);
 		if(user != null) {
-			user.addRole(role);
+			user.addCar(car);
 		}
-		addRole(role);
-		return role;
+		addCar(car);
+		return car;
 	}
 
 	public User getUserByMail(String mail) {
 		return userRepository.findByEmail(mail).orElse(null);
 	}
 
-	public List<User> getUserByRole(String role) {
-		return userRepository.findUsersByRoleName(role);
+	public User getUserByCarRegistration(String registration) {
+		return userRepository.findUsersByCarRegistration(registration).orElse(null);
+	}
+
+	public List<User> getUserByCarModel(String model) {
+		return userRepository.findUsersByCarModel(model);
 	}
 
 }

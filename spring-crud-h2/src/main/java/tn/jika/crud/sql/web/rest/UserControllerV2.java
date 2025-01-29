@@ -59,9 +59,19 @@ public class UserControllerV2 {
 		}
 	}
 
-	@GetMapping("/role/{role}")
-	public ResponseEntity<List<UserDto>> getUserByRole(@PathVariable String role) {
-		List<User> users = userService.getUserByRole(role);
+	@GetMapping("/car/registration/{registration}")
+	public ResponseEntity<UserDto> getUserByCarRegistration(@PathVariable String registration) {
+		User user = userService.getUserByCarRegistration(registration);
+		if (user != null) {
+			return new ResponseEntity<>(userMapper.userToDto(user), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping("/car/model/{model}")
+	public ResponseEntity<List<UserDto>> getUserByCar(@PathVariable String model) {
+		List<User> users = userService.getUserByCarModel(model);
 		return new ResponseEntity<>(userMapper.userToDto(users), HttpStatus.OK);
 	}
 	
