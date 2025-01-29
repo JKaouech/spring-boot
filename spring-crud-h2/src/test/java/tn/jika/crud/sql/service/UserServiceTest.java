@@ -1,4 +1,4 @@
-package com.jika.spring.service;
+package tn.jika.crud.sql.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.jika.spring.model.User;
-import com.jika.spring.repository.UserRepository;
+import tn.jika.crud.sql.model.User;
+import tn.jika.crud.sql.repository.UserRepository;
+import tn.jika.crud.sql.service.UserService;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

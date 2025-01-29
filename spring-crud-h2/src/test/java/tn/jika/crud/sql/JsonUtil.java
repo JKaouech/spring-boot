@@ -1,4 +1,4 @@
-package com.jika.spring;
+package tn.jika.crud.sql;
 
 import java.io.IOException;
 

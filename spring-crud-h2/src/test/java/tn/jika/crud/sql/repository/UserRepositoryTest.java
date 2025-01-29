@@ -1,4 +1,4 @@
-package com.jika.spring.repository;
+package tn.jika.crud.sql.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -9,7 +9,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import com.jika.spring.model.User;
+import tn.jika.crud.sql.model.User;
+import tn.jika.crud.sql.repository.UserRepository;
 
 @DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
